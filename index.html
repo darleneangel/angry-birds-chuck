@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chuck - Angry Birds</title>
+</head>
+
+<body>
+    <canvas id="chuckCanvas" width="1800" height="800"></canvas>
+    <script>
+        const canvas = document.getElementById('chuckCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener("resize", () => {
+                resizeCanvas();
+                drawBackground();
+                drawChuck(canvas.width / 2, canvas.height / 2 + 50, 2);
+            });
+
+
+        function drawChuck(x, y, scale = 1) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+
+            let hairPieces = [
+                { x: -2, y: -80, rotation: -0.3 },  
+                { x: -5, y: -70, rotation: -0.3 }, 
+                { x: 3, y: -85, rotation: -0.7 },   
+                { x: 2, y: -70, rotation: -0.8 }   
+            ];
+
+            let hairWidth = 90;
+            let hairHeight = 60;
+
+            hairPieces.forEach(piece => {
+                ctx.save();
+                ctx.translate(piece.x, piece.y);
+                ctx.rotate(piece.rotation);
+
+                ctx.fillStyle = "#000000";
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(-hairWidth / 2, -hairHeight);  
+                ctx.quadraticCurveTo(-hairWidth / 20, -hairHeight / 4, 4, 4); 
+                ctx.quadraticCurveTo(hairWidth / 36, -hairHeight / 70, hairWidth / 2, -hairHeight); 
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            });
+
+            let tailPieces = [
+                { x: -120, y: 80, rotation: 0.1 },  
+                { x: -120, y: 55, rotation: 0.9 },  
+                { x: -140, y: 60, rotation: 0.5 },  
+            ];
+
+            let tailWidth = 95;   
+            let tailHeight = 40; 
+
+            tailPieces.forEach(piece => {
+                ctx.save();
+                ctx.translate(piece.x, piece.y);
+                ctx.rotate(piece.rotation);
+
+                ctx.fillStyle = "#000000";
+                ctx.strokeStyle = "#000000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(-tailWidth / 2, -tailHeight);  
+                ctx.quadraticCurveTo(-tailWidth / 20, -tailHeight / 0, 0, 0); 
+                ctx.quadraticCurveTo(tailWidth / 36, -tailHeight / 70, tailWidth / 2, -tailHeight); 
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            });
+
+
+            ctx.fillStyle = "#FFEB3B"; 
+            ctx.beginPath();
+            ctx.moveTo(0, -100);        
+            ctx.quadraticCurveTo(70, -50, 120, 80);  
+            ctx.quadraticCurveTo(0, 90, -120, 80);   
+            ctx.quadraticCurveTo(-70, -50, 0, -100); 
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.lineWidth = 6;   
+            ctx.strokeStyle = "#000000"; 
+            ctx.stroke();
+
+            ctx.fillStyle = "#FFFFFF";
+            ctx.beginPath();
+            ctx.ellipse(45, 85, 70, 30, 0, Math.PI, 0, false); 
+            ctx.lineTo(92, 85);  
+            ctx.lineTo(-48, 85);  
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(-55, 85);   
+            ctx.lineTo(116, 81);    
+            ctx.lineWidth = 6;       
+            ctx.strokeStyle = "#000000"; 
+            ctx.stroke();
+
+            let eyeOffsetX = 33;
+            let eyeOffsetY = 32;
+
+            ctx.fillStyle = "#FFFFFF";
+
+            ctx.beginPath();
+            ctx.arc(-24 + eyeOffsetX, -15 + eyeOffsetY, 15, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.lineWidth = 3;           
+            ctx.strokeStyle = "#000000"; 
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(35 + eyeOffsetX, -15 + eyeOffsetY, 15, 0, Math.PI * 2); 
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#000000";
+            ctx.stroke();
+
+            ctx.fillStyle = "#000000";
+            ctx.beginPath();
+            ctx.arc(-16 + eyeOffsetX, -14 + eyeOffsetY, 4, 0, Math.PI * 2); 
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(42 + eyeOffsetX, -14 + eyeOffsetY, 4, 0, Math.PI * 2); 
+            ctx.fill();
+
+            ctx.fillStyle = "#FF0000"; 
+
+            ctx.save();
+            ctx.translate(-25 + eyeOffsetX, -38 + eyeOffsetY); 
+            ctx.rotate(0.4); 
+            ctx.fillRect(-30, -5, 60, 15); 
+            ctx.restore();
+
+            ctx.save();
+            ctx.translate(40 + eyeOffsetX, -38 + eyeOffsetY); 
+            ctx.rotate(-0.4); 
+            ctx.fillRect(-30, -5, 60, 15);
+            ctx.restore();
+
+            let offsetX = 27;
+            let offsetY = 7;
+
+            ctx.fillStyle = "#F57C00"; 
+            ctx.beginPath();
+            ctx.moveTo(0 + offsetX, 20 + offsetY);
+            ctx.quadraticCurveTo(75 + offsetX, 22 + offsetY, 100 + offsetX, 40 + offsetY); 
+            ctx.lineTo(0 + offsetX, 40 + offsetY);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.lineWidth = 4;          
+            ctx.strokeStyle = "#000000"; 
+            ctx.stroke();
+
+            ctx.fillStyle = "#FFB74D"; 
+            ctx.beginPath();
+            ctx.moveTo(0 + offsetX, 40 + offsetY);
+            ctx.quadraticCurveTo(45 + offsetX, 50 + offsetY, 90 + offsetX, 42 + offsetY);
+            ctx.lineTo(0 + offsetX, 65 + offsetY);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#000000";
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+    function drawBackground() {
+
+        let skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        skyGrad.addColorStop(0, "#7EC8FF");  
+        skyGrad.addColorStop(1, "#87CEEB");  
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        function drawCloud(cx, cy, size) {
+            ctx.fillStyle = "#FFFFFF";
+            ctx.beginPath();
+            ctx.arc(cx, cy, size, 0, Math.PI * 2);
+            ctx.arc(cx + size, cy + 10, size * 0.9, 0, Math.PI * 2);
+            ctx.arc(cx - size, cy + 10, size * 0.9, 0, Math.PI * 2);
+            ctx.arc(cx + size * 0.5, cy - 10, size * 0.8, 0, Math.PI * 2);
+            ctx.arc(cx - size * 0.5, cy - 10, size * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        drawCloud(200, 140, 40);
+        drawCloud(600, 110, 55);
+        drawCloud(1000, 160, 45);
+        drawCloud(1500, 120, 50);
+
+        let grassGrad = ctx.createLinearGradient(0, canvas.height - 250, 0, canvas.height);
+        grassGrad.addColorStop(0, "#46C76F");  
+        grassGrad.addColorStop(1, "#2F8B3C"); 
+
+        ctx.fillStyle = grassGrad;
+        ctx.fillRect(0, canvas.height - 250, canvas.width, 250);
+
+        ctx.fillStyle = "#2E8B42";
+        ctx.fillRect(0, canvas.height - 255, canvas.width, 5);
+    }
+
+    drawBackground();
+    drawChuck(canvas.width / 2, canvas.height / 2 + 50, 2);
+
+    </script>
+</body>
+
+</html>
